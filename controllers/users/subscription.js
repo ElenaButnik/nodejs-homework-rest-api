@@ -1,6 +1,6 @@
 const { isValidObjectId } = require("mongoose");
 const { createError } = require("../../helpers");
-const { User } = require("../../models/user");
+const { User } = require("../../models/User");
 
 const subscription = async (req, res, next) => {
   try {

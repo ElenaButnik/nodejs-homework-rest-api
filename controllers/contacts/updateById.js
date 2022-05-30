@@ -1,5 +1,5 @@
 const { isValidObjectId } = require("mongoose");
-const { Contact, schemas } = require("../../models/contact");
+const { Contact, schemas } = require("../../models/Contact");
 const { createError } = require("../../helpers");
 
 const updateById = async (req, res) => {

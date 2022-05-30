@@ -1,5 +1,5 @@
 const { createError } = require("../../helpers");
-const { Contact, schemas } = require("../../models/contact");
+const { Contact, schemas } = require("../../models/Contact");
 
 const add = async (req, res) => {
   const { _id } = req.user;
