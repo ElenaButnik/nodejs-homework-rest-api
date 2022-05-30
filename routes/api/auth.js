@@ -1,4 +1,5 @@
 const express = require("express");
+
 const ctrl = require("../../controllers/users");
 const { ctrlWrapper } = require("../../helpers");
 
@@ -22,5 +23,9 @@ router.patch(
   upload.single("avatar"),
   ctrlWrapper(ctrl.avatars)
 );
+
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verify));
+
+router.post("/verify", ctrlWrapper(ctrl.verifyPost));
 
 module.exports = router;

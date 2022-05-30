@@ -2,15 +2,39 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv"); 
+const nodemailer = require('nodemailer');
 
-// const fs = require("fs/promises");
-// const { nanoid } = require("nanoid");
+const dotenv = require("dotenv");
+
 dotenv.config();
+// require("dotenv").config();
 
+const { DB_HOST, META_PASSWORD } = process.env;
 
+const nodemailerConfig = {
+  host: 'smtp.meta.ua',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'butnik.elena@mate.ua',
+    pass: META_PASSWORD
+  }
+};
 
-const { DB_HOST } = process.env;
+const transporter = nodemailer.createTransport(nodemailerConfig);
+
+const mail = {
+  to: "homir30401@runchet.com",
+  from: "butnik.elena@mate.ua",
+  subject: "New letter",
+  html: "New order",
+};
+
+transporter.sendMail(mail)
+.then(() => console.log("Email send is sucess"))
+.catch((error) => console.log(error.message));
+
+// const { DB_HOST } = process.env;
 
 mongoose
   .connect(DB_HOST)
@@ -39,25 +63,5 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
 });
-
-
-
-// app.post("/contacts", upload.single("avatar"), async (req, res) => {
-//   try {
-//     const { originalname, path: tempUpload } = req.file;
-//     const resultUpload = path.join(avatarsDir, originalname);
-//     await fs.rename(tempUpload, resultUpload);
-//     const avatar = path.join("avatars", originalname);
-//     const newAvatar = {
-//       _id: nanoid(),
-//       ...req.body,
-//       avatar,
-//     };
-//     avatars.push(newAvatar);
-//     res.status(201).json(newAvatar);
-//   } catch (error) {
-//     await fs.unlink(req.file.path);
-//   }
-// });
 
 module.exports = app;
